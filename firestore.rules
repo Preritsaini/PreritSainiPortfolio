@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: leads
+    // Document ID: auto-generated
+    // Fields:
+    //   - name: string (required, 1-100 chars)
+    //   - email: string (required, 3-150 chars)
+    //   - projectType: string (required)
+    //   - message: string (required, 1-3000 chars)
+    //   - submittedAt: timestamp (required)
+    //   - status: string (required)
+    //   - clientMetadata: map (optional)
+    // ===============================================================
+
+    function isValidLead(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && data.email is string && data.email.size() > 3 && data.email.size() <= 150
+        && data.projectType is string
+        && data.message is string && data.message.size() > 0 && data.message.size() <= 3000
+        && data.status is string;
+    }
+
+    match /leads/{leadId} {
+      // Anyone can submit an inquiry from the portfolio
+      allow create: if isValidLead(request.resource.data);
+
+      // Stored leads are confidential: public read, update, and delete are forbidden
+      allow read, update, delete: if false;
+    }
+
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
