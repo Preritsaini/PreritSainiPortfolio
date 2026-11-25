@@ -78,7 +78,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project })
         }}
       >
         <div
-          className="app-container"
+          className="app-container project-detail-header"
           style={{
             display: "flex",
             alignItems: "center",
@@ -147,7 +147,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project })
       </header>
 
       {/* Main Content */}
-      <main className="app-container" style={{ padding: "48px 24px 100px" }}>
+      <main className="app-container project-detail-main" style={{ padding: "48px 24px 100px" }}>
         {/* Project Hero */}
         <div style={{ marginBottom: "50px" }}>
           {/* Badges */}
@@ -265,7 +265,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project })
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
               gap: "28px",
             }}
           >
@@ -351,7 +351,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project })
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
                 gap: "20px",
               }}
             >
@@ -649,7 +649,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({ project })
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
                 gap: "14px",
               }}
             >

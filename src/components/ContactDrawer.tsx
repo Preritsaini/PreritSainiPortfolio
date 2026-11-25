@@ -209,6 +209,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
       >
         {/* Drawer Header with Close Button */}
         <div
+          className="drawer-header"
           style={{
             padding: "24px 32px 14px 32px",
             display: "flex",
@@ -275,6 +276,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
 
         {/* Scrollable Form Body */}
         <div
+          className="drawer-body"
           style={{
             flex: "1 1 auto",
             overflowY: "auto",
@@ -563,7 +565,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
             </div>
 
             {/* 3. FAST SOCIAL PILLS (LinkedIn & GitHub) */}
-            <div style={{ display: "flex", gap: "10px", marginTop: "2px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "2px" }}>
               <a
                 href={LINKEDIN_LINK}
                 target="_blank"
@@ -771,7 +773,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleOpenDefaultMail} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+              <form className="drawer-form" onSubmit={handleOpenDefaultMail} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                 {/* Role / Inquiry Type Pills */}
                 <div>
                   <label
@@ -788,6 +790,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
                   <div
                     style={{
                       display: "flex",
+                      flexWrap: "wrap",
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                       border: "1px solid rgba(255, 255, 255, 0.08)",
                       borderRadius: "12px",
@@ -827,6 +830,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
 
                 {/* Name & Contact Info in 2 Columns */}
                 <div
+                  className="drawer-two-col"
                   style={{
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
@@ -943,7 +947,7 @@ export const ContactDrawer: React.FC<ContactDrawerProps> = ({ isOpen, onClose })
                 </div>
 
                 {/* Primary Action Buttons: Gmail Web & Default Client side-by-side */}
-                <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "10px", marginTop: "4px" }}>
+                <div className="drawer-two-col" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "10px", marginTop: "4px" }}>
                   {/* 1. Open in Gmail Web (Primary for web users) */}
                   <button
                     type="button"

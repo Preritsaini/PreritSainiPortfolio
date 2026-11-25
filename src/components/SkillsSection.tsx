@@ -38,7 +38,7 @@ export const SkillsSection: React.FC = () => {
   return (
     <section
       id="skills"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#f8fafc" : "rgba(10, 15, 30, 0.4)",
         borderTop: isLight ? "1px solid rgba(0, 0, 0, 0.05)" : "1px solid rgba(255, 255, 255, 0.06)",
@@ -143,12 +143,8 @@ export const SkillsSection: React.FC = () => {
 
         {/* Selected Category Skill Matrix Grid */}
         <div
-          className="glass-card"
+          className="glass-card skills-matrix-grid"
           style={{
-            padding: "32px",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "20px",
             background: isLight ? "#ffffff" : "var(--bg-card)",
             border: isLight ? "1px solid rgba(0, 0, 0, 0.08)" : "1px solid var(--border-subtle)",
             boxShadow: isLight ? "0 10px 30px rgba(0, 0, 0, 0.04)" : "none",
@@ -243,7 +239,7 @@ export const SkillsSection: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
             gap: "16px",
             marginTop: "32px",
           }}

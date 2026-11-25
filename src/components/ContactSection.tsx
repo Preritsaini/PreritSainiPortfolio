@@ -160,7 +160,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
   return (
     <section
       id="contact"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#ffffff" : "rgba(6, 9, 19, 0.6)",
         transition: "background 0.3s ease",
@@ -208,7 +208,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
         >
           {/* Left Column: Direct Info & Socials */}
           <div
-            className="glass-card"
+            className="glass-card contact-card-panel"
             style={{
               padding: "36px",
               background: isLight ? "#ffffff" : undefined,
@@ -262,6 +262,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: "12px",
                 padding: "16px 20px",
                 borderRadius: "14px",
                 background: isLight ? "#f8fafc" : "rgba(0, 0, 0, 0.4)",
@@ -269,7 +271,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 marginBottom: "14px",
               }}
             >
-              <div>
+              <div style={{ minWidth: 0, flex: "1 1 180px" }}>
                 <div style={{ fontSize: "0.75rem", color: "#64748b", textTransform: "uppercase", fontWeight: 700 }}>
                   Primary Email
                 </div>
@@ -316,6 +318,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: "12px",
                 padding: "16px 20px",
                 borderRadius: "14px",
                 background: isLight ? "#f8fafc" : "rgba(0, 0, 0, 0.4)",
@@ -455,7 +459,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
 
           {/* Right Column: Interactive Form */}
           <div
-            className="glass-card"
+            className="glass-card contact-card-panel"
             style={{
               padding: "36px",
               background: isLight ? "#ffffff" : undefined,
@@ -622,7 +626,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+              <form className="contact-form" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                 <div>
                   <label
                     style={{

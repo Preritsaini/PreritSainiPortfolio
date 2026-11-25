@@ -26,6 +26,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
+      className="deferred-section"
       style={{
         borderTop: isLight ? "1px solid rgba(0, 0, 0, 0.08)" : "1px solid rgba(255, 255, 255, 0.08)",
         background: isLight ? "#f4f3ef" : "#04060d",

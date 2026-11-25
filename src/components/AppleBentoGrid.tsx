@@ -225,7 +225,7 @@ export const AppleBentoGrid: React.FC = () => {
 
   return (
     <section
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#f0f0f2" : "#080c16",
         borderRadius: "44px 44px 0 0",
@@ -262,6 +262,7 @@ export const AppleBentoGrid: React.FC = () => {
 
             {/* ROW 2: DEDICATED SQUIRCLE ROW (ALL 10 LOGOS IN THEIR OWN ROW - CENTERED) */}
             <div
+              className="bento-tools-row"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -275,6 +276,7 @@ export const AppleBentoGrid: React.FC = () => {
               }}
             >
               <div
+                className="bento-tools-track"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -365,6 +367,7 @@ export const AppleBentoGrid: React.FC = () => {
 
             {/* ROW 3: "your vision." (RIGHT-ALIGNED IN CENTERED CONTAINER) */}
             <div
+              className="bento-vision-heading"
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
@@ -445,15 +448,7 @@ export const AppleBentoGrid: React.FC = () => {
         {/* ==================================================================== */}
         {/* 2. STAGGERED 4-CARD PILLARS (CENTERED 2x2 BALANCED GRID)            */}
         {/* ==================================================================== */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-            maxWidth: "1040px",
-            margin: "44px auto 0 auto",
-            gap: "24px",
-          }}
-        >
+        <div className="bento-pillars-grid">
           {skillPillars.map((cap) => {
             const isHighlighted =
               selectedFilter && cap.relatedTools.includes(selectedFilter);
@@ -461,6 +456,7 @@ export const AppleBentoGrid: React.FC = () => {
             return (
               <div
                 key={cap.id}
+                className="bento-pillar-card"
                 style={{
                   background: isLight ? "#ffffff" : "rgba(15, 23, 42, 0.65)",
                   borderRadius: "28px",

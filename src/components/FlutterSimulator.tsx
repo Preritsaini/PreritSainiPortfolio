@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { sound } from "../utils/audioSynth";
 import { useTheme } from "../context/ThemeContext";
 import { FighterJetSvg } from "./FighterJetSvg";
@@ -620,12 +621,12 @@ return box.get(chapterId);`,
   const getDeviceDimensions = () => {
     switch (deviceType) {
       case "tablet":
-        return { width: "min(100%, 640px)", height: "640px", radius: "28px" };
+        return { width: "min(100%, 640px)", height: "clamp(540px, 74dvh, 640px)", radius: "28px" };
       case "laptop":
-        return { width: "min(100%, 880px)", height: "560px", radius: "18px" };
+        return { width: "min(100%, 880px)", height: "clamp(500px, 72dvh, 560px)", radius: "18px" };
       case "phone":
       default:
-        return { width: "320px", height: "640px", radius: "44px" };
+        return { width: "min(100%, 336px)", height: "clamp(540px, 74dvh, 640px)", radius: "44px" };
     }
   };
 
@@ -637,6 +638,7 @@ return box.get(chapterId);`,
       {/* 1. SIMULATOR CONTROL BAR (FULLY ADAPTIVE FOR LIGHT AND DARK MODE)    */}
       {/* ==================================================================== */}
       <div
+        className="simulator-control-bar"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -925,6 +927,7 @@ return box.get(chapterId);`,
 
           {/* Screen Bezel Container */}
           <div
+            className="sim-screen-container"
             style={{
               width: "100%",
               height: "100%",
@@ -1220,6 +1223,7 @@ return box.get(chapterId);`,
                   {/* TABLET / LAPTOP LEFT SIDEBAR */}
                   {deviceType !== "phone" && (
                     <div
+                      className="sim-sidebar"
                       style={{
                         width: deviceType === "laptop" ? "250px" : "210px",
                         borderRight: `1px solid ${theme.border}`,
@@ -1239,9 +1243,12 @@ return box.get(chapterId);`,
                           alignItems: "center",
                         }}
                       >
-                        <img
+                        <Image
                           src="/books/cover.jpg"
                           alt="The Starlight Voyager"
+                          width={48}
+                          height={64}
+                          loading="lazy"
                           style={{
                             width: "48px",
                             height: "64px",
@@ -1340,9 +1347,12 @@ return box.get(chapterId);`,
                               }}
                             >
                               {activeBook === "voyager" && "image" in ch && (
-                                <img
-                                  src={(ch as any).image}
+                                <Image
+                                  src={(ch as { image: string }).image}
                                   alt=""
+                                  width={32}
+                                  height={24}
+                                  loading="lazy"
                                   style={{
                                     width: "32px",
                                     height: "24px",
@@ -1407,9 +1417,12 @@ return box.get(chapterId);`,
                         }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
-                          <img
+                          <Image
                             src="/books/cover.jpg"
                             alt="Cover"
+                            width={22}
+                            height={28}
+                            loading="lazy"
                             style={{
                               width: "22px",
                               height: "28px",
@@ -1626,11 +1639,15 @@ return box.get(chapterId);`,
                             background: "rgba(0, 0, 0, 0.2)",
                           }}
                         >
-                          <img
-                            src={(currentChapter as any).image}
+                          <Image
+                            src={(currentChapter as { image: string }).image}
                             alt={currentChapter.title}
+                            width={640}
+                            height={360}
+                            loading="lazy"
                             style={{
                               width: "100%",
+                              height: "auto",
                               maxHeight: deviceType === "laptop" ? "320px" : deviceType === "tablet" ? "240px" : "195px",
                               objectFit: "cover",
                               display: "block",
@@ -2700,6 +2717,7 @@ return box.get(chapterId);`,
 
                 {/* 3. Main Dynamic Neobank Viewports */}
                 <div
+                  className="sim-two-col"
                   style={{
                     flex: 1,
                     display: deviceType === "phone" ? "flex" : "grid",
@@ -2781,7 +2799,7 @@ return box.get(chapterId);`,
                         </div>
 
                         {/* Neobank Quick Action Rail */}
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px" }}>
+                        <div className="sim-kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px" }}>
                           <button
                             onClick={() => handleSimulateTrade("send")}
                             disabled={isScanningBiometric}

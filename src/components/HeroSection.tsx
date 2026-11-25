@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { sound } from "../utils/audioSynth";
 import { FileText, Smartphone, ArrowDown } from "lucide-react";
 
@@ -10,65 +10,84 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLElement>(null);
+  const lettersGroupRef = useRef<HTMLDivElement>(null);
+  const ambientGlowRef = useRef<HTMLDivElement>(null);
+  const waveGroupRef = useRef<SVGGElement>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const scrollRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
-  // Butter-smooth RAF scroll listener for instant physics
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const applyParallax = () => {
+    const scrollClamped = Math.max(0, scrollRef.current);
+    const scrollRatio = Math.min(scrollClamped / 650, 1);
+    const waveTranslateY = Math.min(scrollClamped * 0.72, 220);
+    const waveTranslateX = Math.sin(scrollClamped * 0.006) * 36;
+    const ambientTranslateY = Math.min(scrollClamped * 0.52, 160);
+    const ambientScale = 1 + scrollRatio * 0.22;
+    const ambientOpacity = Math.min(0.85 + scrollRatio * 0.15, 1);
+    const lettersParallax = scrollClamped * 0.14;
+    const mx = mouseRef.current.x;
+    const my = mouseRef.current.y;
 
-  // Track cursor position across hero for dynamic light deflection
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    setMousePos({ x: normX, y: normY });
+    if (lettersGroupRef.current) {
+      lettersGroupRef.current.style.transform = `translate3d(0, ${-lettersParallax}px, 0)`;
+    }
+    if (ambientGlowRef.current) {
+      ambientGlowRef.current.style.opacity = String(ambientOpacity);
+      ambientGlowRef.current.style.transform = `translate3d(${waveTranslateX * 0.8 + mx * 20}px, ${-ambientTranslateY + my * 12}px, 0) scale(${ambientScale})`;
+    }
+    if (waveGroupRef.current) {
+      waveGroupRef.current.style.transform = `translate(${waveTranslateX + mx * 24}px, ${-waveTranslateY + my * 14}px)`;
+    }
+    rafRef.current = null;
   };
 
-  // Immediate reactive scroll metrics: As soon as user scrolls, the fluid wave rises and undulates
-  const scrollClamped = Math.max(0, scrollY);
-  const scrollRatio = Math.min(scrollClamped / 650, 1);
+  const scheduleUpdate = () => {
+    if (rafRef.current === null) {
+      rafRef.current = window.requestAnimationFrame(applyParallax);
+    }
+  };
 
-  // Dynamic fluid wave motion:
-  // As user scrolls, the wave crests rise up through the letters and undulate horizontally!
-  const waveTranslateY = Math.min(scrollClamped * 0.72, 220);
-  const waveTranslateX = Math.sin(scrollClamped * 0.006) * 36;
-  const ambientTranslateY = Math.min(scrollClamped * 0.52, 160);
-  const ambientScale = 1 + scrollRatio * 0.22;
-  const ambientOpacity = Math.min(0.85 + scrollRatio * 0.15, 1);
-  const lettersParallax = scrollClamped * 0.14;
+  // Zero-rerender RAF scroll listener for 120 FPS mobile & desktop performance
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollRef.current = window.scrollY;
+      scheduleUpdate();
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) window.cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  // Track cursor position on fine pointers only (skipped on touch devices)
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!heroRef.current || (typeof window !== "undefined" && !window.matchMedia("(pointer: fine)").matches)) {
+      return;
+    }
+    const rect = heroRef.current.getBoundingClientRect();
+    mouseRef.current = {
+      x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
+      y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
+    };
+    scheduleUpdate();
+  };
 
   return (
     <section
       id="hero"
       ref={heroRef}
       onMouseMove={handleMouseMove}
+      className="hero-section"
       style={{
-        minHeight: "100vh",
-        height: "100dvh",
-        maxHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         position: "relative",
         overflow: "hidden",
         backgroundColor: "var(--bg-primary)",
-        paddingTop: "76px",
-        paddingBottom: "12px",
       }}
     >
       {/* 1. UPPER ROW: Compact, Sleek Bar — Status on Left, Headline & Actions on Right */}
@@ -154,6 +173,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
 
       {/* 2. LOWER-HERO AREA: GIGANTIC "PRERIT" TYPOGRAPHY — GROUNDED NATURALLY */}
       <div
+        ref={lettersGroupRef}
+        className="hero-letters-wrap"
         style={{
           position: "relative",
           width: "100%",
@@ -163,13 +184,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
           alignItems: "center",
           justifyContent: "flex-end",
           overflow: "visible",
-          transform: `translateY(${-lettersParallax}px)`,
-          transition: "transform 0.04s ease-out",
           paddingBottom: "8px",
         }}
       >
         {/* Ambient Glowing Red Wave Behind Letters (Unmasked - Spills organic red light onto canvas) */}
         <div
+          ref={ambientGlowRef}
+          className="hero-ambient-glow"
           style={{
             position: "absolute",
             bottom: "-15px",
@@ -178,10 +199,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
             height: "380px",
             pointerEvents: "none",
             zIndex: 1,
-            filter: "blur(70px)",
-            opacity: ambientOpacity,
-            transform: `translate(${waveTranslateX * 0.8 + mousePos.x * 20}px, ${-ambientTranslateY + mousePos.y * 12}px) scale(${ambientScale})`,
-            transition: "transform 0.05s ease-out, opacity 0.1s ease-out",
+            opacity: 0.85,
           }}
         >
           {/* Left atmospheric wave crest bloom (illuminates behind P & R) */}
@@ -227,12 +245,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
           <svg
             viewBox="0 0 1440 345"
             width="100%"
-            style={{
-              display: "block",
-              overflow: "visible",
-              height: "clamp(260px, 48vh, 560px)",
-              maxHeight: "54vh",
-            }}
+            className="hero-letters-svg"
             preserveAspectRatio="xMidYEnd meet"
           >
             <defs>
@@ -297,10 +310,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
 
               {/* The moving fluid wave group: lifts UP and drifts dynamically as user scrolls! */}
               <g
+                ref={waveGroupRef}
                 style={{
-                  transform: `translate(${waveTranslateX + mousePos.x * 24}px, ${-waveTranslateY + mousePos.y * 14}px)`,
-                  transition: "transform 0.05s ease-out",
-                  willChange: "transform",
+                  transform: "translate(0px, 0px)",
                 }}
               >
                 {/* 1. Silky feathered fluid wave under-layer */}

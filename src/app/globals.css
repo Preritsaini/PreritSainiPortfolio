@@ -197,6 +197,9 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(4.75rem + env(safe-area-inset-top, 0px));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   color-scheme: dark;
 }
 
@@ -205,13 +208,34 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-wrap: break-word;
   background-image:
     radial-gradient(ellipse 70% 40% at 50% -10%, rgba(255, 0, 34, 0.08), transparent),
     radial-gradient(circle 600px at 85% 15%, rgba(0, 229, 255, 0.05), transparent),
     radial-gradient(circle 700px at 15% 65%, rgba(139, 92, 246, 0.04), transparent);
-  background-attachment: fixed;
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+img, video {
+  max-inline-size: 100%;
+  height: auto;
+}
+
+:where(a, code) {
+  overflow-wrap: anywhere;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+.deferred-section {
+  /* Keep rendering eager to prevent blank frames during fast mobile scroll */
 }
 
 /* Custom Scrollbar */
@@ -430,15 +454,16 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #ff790c 0%, #ff5500 50%, #e11d48 100%);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(255, 121, 12, 0.35);
+  background: #ff790c;
+  color: #050505;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(255, 121, 12, 0.28);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 28px rgba(255, 121, 12, 0.5);
+  background: #ff8c2b;
+  box-shadow: 0 6px 28px rgba(255, 121, 12, 0.42);
   transform: translateY(-2px);
-  filter: brightness(1.08);
 }
 
 .btn-secondary {
@@ -573,18 +598,278 @@ body {
   .app-container {
     padding: 0 16px;
   }
-  .simulator-responsive-wrapper {
-    transform: scale(0.92);
-    transform-origin: top center;
-    margin-bottom: -50px;
+}
+
+/* Mobile & Tablet Responsive Alignment and Performance Fixes */
+.site-header {
+  padding: max(16px, env(safe-area-inset-top, 0px)) 32px 16px 32px;
+}
+
+.hero-section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: calc(76px + env(safe-area-inset-top, 0px));
+  padding-bottom: 12px;
+}
+
+.hero-letters-svg {
+  display: block;
+  overflow: visible;
+  height: clamp(220px, 44dvh, 520px);
+  max-height: 52dvh;
+}
+
+.hero-ambient-glow {
+  filter: blur(64px);
+}
+
+.sim-screen-container {
+  container-type: inline-size;
+  container-name: sim-screen;
+}
+
+@container sim-screen (inline-size < 460px) {
+  .sim-sidebar {
+    display: none !important;
+  }
+  .sim-two-col {
+    grid-template-columns: 1fr !important;
+  }
+  .sim-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-@media (max-width: 360px) {
-  .simulator-responsive-wrapper {
-    transform: scale(0.84);
-    transform-origin: top center;
-    margin-bottom: -95px;
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 28px;
+}
+
+.bento-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  max-width: 1040px;
+  margin: 44px auto 0 auto;
+  gap: 24px;
+}
+
+.skills-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  padding: 32px;
+}
+
+.engagement-grid {
+  max-width: 1020px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+
+.arch-flow-arrow {
+  flex-shrink: 0;
+}
+
+.arch-flow-box {
+  flex: 1 1 180px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 52px 0 !important;
+  }
+  .site-header {
+    padding: max(12px, env(safe-area-inset-top, 0px)) 14px 12px 14px !important;
+    gap: 8px !important;
+  }
+  .navbar-logo-text {
+    font-size: 1.1rem !important;
+  }
+  .navbar-menu-btn {
+    padding: 8px 14px !important;
+    gap: 8px !important;
+  }
+  .navbar-status-divider,
+  .navbar-status-text {
+    display: none !important;
+  }
+  .navbar-cta-btn {
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
+  }
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .hero-section {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    gap: 32px;
+    padding-top: calc(74px + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 32px !important;
+  }
+  .hero-letters-wrap {
+    flex: 0 0 auto !important;
+  }
+  .hero-upper-manifesto {
+    padding: 16px 20px 0 20px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .hero-right-actions {
+    text-align: left !important;
+    max-width: 100% !important;
+  }
+  .hero-action-buttons {
+    justify-content: flex-start !important;
+  }
+  .hero-letters-svg {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 110px;
+  }
+  .hero-ambient-glow {
+    filter: blur(36px) !important;
+    height: 220px !important;
+  }
+  .hero-bottom-meta {
+    padding: 8px 20px !important;
+    font-size: 0.78rem !important;
+  }
+  .simulator-control-bar {
+    padding: 10px 12px !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+  .bento-tools-row {
+    overflow-x: visible !important;
+  }
+  .bento-tools-track {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 0 4px !important;
+    width: 100% !important;
+  }
+  .bento-pillar-card {
+    padding: 24px 20px !important;
+    min-height: auto !important;
+  }
+  .bento-pillar-card h3 {
+    font-size: 1.35rem !important;
+  }
+  .bento-vision-heading {
+    justify-content: flex-start !important;
+    padding-right: 0 !important;
+    padding-left: 8px !important;
+  }
+  .bento-vision-heading h2 {
+    text-align: left !important;
+  }
+  .arch-flow-card {
+    padding: 20px 18px !important;
+  }
+  .arch-flow-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .arch-flow-box {
+    flex: 0 0 auto !important;
+    width: 100%;
+  }
+  .arch-flow-arrow {
+    align-self: center !important;
+    transform: rotate(90deg) !important;
+  }
+  .skills-matrix-grid {
+    padding: 18px !important;
+    gap: 14px !important;
+  }
+  .engagement-card {
+    padding: 26px 20px !important;
+    border-radius: 24px !important;
+  }
+  .experience-card {
+    padding: 22px 18px !important;
+  }
+  .resume-bento-card {
+    padding: 24px 18px !important;
+    gap: 28px !important;
+    border-radius: 22px !important;
+  }
+  .resume-preview-slate {
+    padding: 20px 16px !important;
+  }
+  .resume-highlights-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-card-panel {
+    padding: 22px 18px !important;
+  }
+  .drawer-header {
+    padding: 16px 20px 12px 20px !important;
+  }
+  .drawer-body {
+    padding: 16px 20px 28px 20px !important;
+  }
+  .drawer-two-col {
+    grid-template-columns: 1fr !important;
+  }
+  .resume-modal-header {
+    padding: 14px 16px !important;
+  }
+  .resume-modal-body {
+    padding: 20px 18px !important;
+  }
+  .project-detail-header {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .project-detail-main {
+    padding: 28px 16px 72px !important;
+  }
+  .cookie-banner-card {
+    left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    right: max(12px, env(safe-area-inset-right, 0px)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px)) !important;
+    max-width: 100% !important;
+    padding: 14px 16px !important;
+    gap: 12px !important;
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea,
+  .drawer-form input,
+  .drawer-form textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar-cta-text {
+    display: none !important;
+  }
+  .navbar-cta-btn {
+    padding: 8px 12px !important;
+  }
+  .navbar-logo-wrap {
+    gap: 8px !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .site-header button,
+  .site-header a.navbar-cta-btn,
+  .touch-target {
+    min-block-size: 44px;
+    min-inline-size: 44px;
   }
 }
 
@@ -715,31 +1000,7 @@ body {
   100% { transform: translateY(0px); }
 }
 
-@media (max-width: 768px) {
-  .hero-upper-manifesto {
-    padding: 10px 20px 0 20px !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-  }
-  .hero-right-actions {
-    text-align: left !important;
-    max-width: 100% !important;
-  }
-  .hero-action-buttons {
-    justify-content: flex-start !important;
-  }
-  .hero-bottom-meta {
-    padding: 8px 20px !important;
-    font-size: 0.75rem !important;
-  }
-  .cookie-banner-card {
-    left: 16px !important;
-    right: 16px !important;
-    bottom: 16px !important;
-    max-width: 100% !important;
-  }
-}
+/* Mobile hero helpers cleaned up above */
 
 /* Hide Next.js Dev Indicator Badge ("N" button) */
 nextjs-portal,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS, Project } from "../data/portfolioData";
 import { GithubIcon } from "./Icons";
@@ -115,7 +116,7 @@ const ReadHubVisualPreview: React.FC = () => {
         transition: "background 0.3s ease, border 0.3s ease",
         display: "flex",
         flexDirection: "column",
-        height: "295px",
+        minHeight: "295px",
         position: "relative",
       }}
     >
@@ -126,21 +127,27 @@ const ReadHubVisualPreview: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "8px",
           borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
           background: "rgba(0, 0, 0, 0.35)",
           backdropFilter: "blur(8px)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+          <Image
             src="/books/cover.jpg"
             alt="Cover"
+            width={20}
+            height={26}
+            loading="lazy"
             style={{
               width: "20px",
               height: "26px",
               borderRadius: "3px",
               objectFit: "cover",
               boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+              flexShrink: 0,
             }}
           />
           <div>
@@ -218,8 +225,9 @@ const ReadHubVisualPreview: React.FC = () => {
         {/* Book Photo / Illustration Thumbnail Banner */}
         <div
           style={{
-            width: "96px",
-            height: "100%",
+            width: "84px",
+            minHeight: "145px",
+            alignSelf: "stretch",
             borderRadius: "8px",
             overflow: "hidden",
             border: `1px solid ${currentTheme.border}`,
@@ -228,9 +236,12 @@ const ReadHubVisualPreview: React.FC = () => {
             boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
           }}
         >
-          <img
+          <Image
             src="/books/chapter1.jpg"
             alt="Chapter 1 Beacon"
+            width={84}
+            height={145}
+            loading="lazy"
             style={{
               width: "100%",
               height: "100%",
@@ -1126,7 +1137,7 @@ const FinPulseVisualPreview: React.FC = () => {
         boxShadow: "0 14px 34px rgba(0, 0, 0, 0.6), inset 0 0 2px rgba(255, 255, 255, 0.15)",
         display: "flex",
         flexDirection: "column",
-        height: "285px",
+        minHeight: "285px",
         position: "relative",
       }}
     >
@@ -1137,6 +1148,8 @@ const FinPulseVisualPreview: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "8px",
           background: "rgba(0, 0, 0, 0.35)",
           borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
         }}
@@ -1407,7 +1420,7 @@ export const ProjectsSection: React.FC = () => {
   return (
     <section
       id="projects"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "var(--bg-secondary, #f8fafc)" : "rgba(10, 14, 26, 0.6)",
         transition: "background 0.3s ease",
@@ -1496,13 +1509,7 @@ export const ProjectsSection: React.FC = () => {
         </div>
 
         {/* 3 Featured Projects Showcase Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-            gap: "28px",
-          }}
-        >
+        <div className="projects-grid">
           {filteredProjects.map((project) => {
             return (
               <div

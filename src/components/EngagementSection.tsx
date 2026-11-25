@@ -128,7 +128,7 @@ export const EngagementSection: React.FC<EngagementSectionProps> = ({ onOpenResu
   return (
     <section
       id="collaboration"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#ffffff" : "#050505",
         padding: "110px 0",
@@ -176,19 +176,11 @@ export const EngagementSection: React.FC<EngagementSectionProps> = ({ onOpenResu
         </div>
 
         {/* 2-Card Simple Retainer Grid (Matching Reference Design) */}
-        <div
-          style={{
-            maxWidth: "1020px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-            gap: "32px",
-            alignItems: "stretch",
-          }}
-        >
+        <div className="engagement-grid">
           {models.map((model) => (
             <div
               key={model.id}
+              className="engagement-card"
               style={{
                 position: "relative",
                 background: isLight
@@ -395,7 +387,7 @@ export const EngagementSection: React.FC<EngagementSectionProps> = ({ onOpenResu
             maxWidth: "1020px",
             margin: "36px auto 0 auto",
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
             gap: "18px",
           }}
         >

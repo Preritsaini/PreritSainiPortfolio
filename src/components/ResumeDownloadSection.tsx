@@ -39,7 +39,7 @@ export const ResumeDownloadSection: React.FC<ResumeDownloadSectionProps> = ({ on
   return (
     <section
       id="resume-download"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#f8fafc" : "#050505",
         padding: "120px 0",
@@ -85,10 +85,11 @@ export const ResumeDownloadSection: React.FC<ResumeDownloadSectionProps> = ({ on
             alignItems: "center",
             boxShadow: isLight ? "0 10px 40px rgba(0, 0, 0, 0.04)" : "none",
           }}
-          className="hero-grid"
+          className="hero-grid resume-bento-card"
         >
           {/* Left Column: Visual Resume Preview Slate */}
           <div
+            className="resume-preview-slate"
             style={{
               background: isLight ? "#f8fafc" : "rgba(10, 10, 14, 0.9)",
               border: isLight ? "1px solid rgba(0, 0, 0, 0.08)" : "1px solid rgba(255, 255, 255, 0.08)",
@@ -174,6 +175,7 @@ export const ResumeDownloadSection: React.FC<ResumeDownloadSectionProps> = ({ on
 
             {/* Highlights Pillars */}
             <div
+              className="resume-highlights-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
@@ -331,10 +333,10 @@ export const ResumeDownloadSection: React.FC<ResumeDownloadSectionProps> = ({ on
                 gap: "12px",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", color: isLight ? "#0f172a" : "#e2e8f0" }}>
-                  <Mail size={14} color="#ff790c" />
-                  <span>{RESUME_DATA.email}</span>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", color: isLight ? "#0f172a" : "#e2e8f0", minWidth: 0 }}>
+                  <Mail size={14} color="#ff790c" style={{ flexShrink: 0 }} />
+                  <span style={{ overflowWrap: "anywhere" }}>{RESUME_DATA.email}</span>
                 </div>
                 <button
                   onClick={handleCopyEmail}

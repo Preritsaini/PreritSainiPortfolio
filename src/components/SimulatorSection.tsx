@@ -13,7 +13,7 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ hotReloadTri
   return (
     <section
       id="simulator"
-      className="section"
+      className="section deferred-section"
       style={{
         background: "var(--bg-secondary)",
         borderTop: "1px solid var(--border-subtle)",

@@ -12,7 +12,7 @@ export const ExperienceSection: React.FC = () => {
   return (
     <section
       id="experience"
-      className="section"
+      className="section deferred-section"
       style={{
         background: isLight ? "#f8fafc" : undefined,
         transition: "background 0.3s ease",
@@ -183,7 +183,7 @@ export const ExperienceSection: React.FC = () => {
             >
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <GraduationCap size={20} color="#8b5cf6" />
+                  <GraduationCap size={20} color="#8b5cf6" style={{ flexShrink: 0 }} />
                   <h3
                     style={{
                       fontSize: "1.3rem",

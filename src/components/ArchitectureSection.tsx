@@ -19,7 +19,7 @@ export const ArchitectureSection: React.FC = () => {
   const [activeConcept, setActiveConcept] = useState<"bloc" | "clean" | "pipeline" | "channels">("bloc");
 
   return (
-    <section id="architecture" className="section">
+    <section id="architecture" className="section deferred-section">
       <div className="app-container">
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
@@ -44,7 +44,7 @@ export const ArchitectureSection: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
             gap: "14px",
             marginBottom: "36px",
           }}
@@ -116,7 +116,7 @@ export const ArchitectureSection: React.FC = () => {
 
         {/* Concept Interactive Flow Diagram */}
         <div
-          className="glass-card"
+          className="glass-card arch-flow-card"
           style={{
             padding: "24px 32px",
             marginBottom: "0px",
@@ -126,23 +126,23 @@ export const ArchitectureSection: React.FC = () => {
           }}
         >
           {activeConcept === "bloc" && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-              <div style={flowStepBox("#02569b")}>
+            <div className="arch-flow-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+              <div className="arch-flow-box" style={flowStepBox("#02569b")}>
                 <div style={flowStepTitle}>1. User Action</div>
                 <div style={flowStepDesc}>Tap / Pull to Refresh</div>
               </div>
-              <ArrowRight size={20} color="#00e5ff" />
-              <div style={flowStepBox("#0175c2")}>
+              <ArrowRight size={20} color="#00e5ff" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#0175c2")}>
                 <div style={flowStepTitle}>2. Dispatch Event</div>
                 <div style={flowStepDesc}>Bloc.add(FetchBookEvent)</div>
               </div>
-              <ArrowRight size={20} color="#00e5ff" />
-              <div style={flowStepBox("#7c3aed")}>
+              <ArrowRight size={20} color="#00e5ff" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#7c3aed")}>
                 <div style={flowStepTitle}>3. Business Logic</div>
                 <div style={flowStepDesc}>Repository &amp; Hive Cache</div>
               </div>
-              <ArrowRight size={20} color="#00e5ff" />
-              <div style={flowStepBox("#059669")}>
+              <ArrowRight size={20} color="#00e5ff" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#059669")}>
                 <div style={flowStepTitle}>4. Emit Immutable State</div>
                 <div style={flowStepDesc}>BlocBuilder Re-renders UI</div>
               </div>
@@ -150,18 +150,18 @@ export const ArchitectureSection: React.FC = () => {
           )}
 
           {activeConcept === "clean" && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-              <div style={flowStepBox("#7c3aed")}>
+            <div className="arch-flow-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+              <div className="arch-flow-box" style={flowStepBox("#7c3aed")}>
                 <div style={flowStepTitle}>Presentation Layer</div>
                 <div style={flowStepDesc}>Widgets, Pages, BLoC/Cubit</div>
               </div>
-              <ArrowRight size={20} color="#a855f7" />
-              <div style={flowStepBox("#2563eb")}>
+              <ArrowRight size={20} color="#a855f7" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#2563eb")}>
                 <div style={flowStepTitle}>Domain Layer</div>
                 <div style={flowStepDesc}>UseCases, Entities, Contract</div>
               </div>
-              <ArrowRight size={20} color="#a855f7" />
-              <div style={flowStepBox("#059669")}>
+              <ArrowRight size={20} color="#a855f7" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#059669")}>
                 <div style={flowStepTitle}>Data Layer</div>
                 <div style={flowStepDesc}>Repositories, Hive, APIs, S3</div>
               </div>
@@ -169,18 +169,18 @@ export const ArchitectureSection: React.FC = () => {
           )}
 
           {activeConcept === "pipeline" && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-              <div style={flowStepBox("#02569b")}>
+            <div className="arch-flow-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+              <div className="arch-flow-box" style={flowStepBox("#02569b")}>
                 <div style={flowStepTitle}>VSync Signal</div>
                 <div style={flowStepDesc}>16.6ms / 8.3ms Window</div>
               </div>
-              <ArrowRight size={20} color="#10b981" />
-              <div style={flowStepBox("#0d9488")}>
+              <ArrowRight size={20} color="#10b981" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#0d9488")}>
                 <div style={flowStepTitle}>UI Thread (Build &amp; Layout)</div>
                 <div style={flowStepDesc}>Widget &gt; Element &gt; RenderObject</div>
               </div>
-              <ArrowRight size={20} color="#10b981" />
-              <div style={flowStepBox("#059669")}>
+              <ArrowRight size={20} color="#10b981" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#059669")}>
                 <div style={flowStepTitle}>Raster Thread (Impeller)</div>
                 <div style={flowStepDesc}>GPU Shaders &amp; Metal / Vulkan</div>
               </div>
@@ -188,18 +188,18 @@ export const ArchitectureSection: React.FC = () => {
           )}
 
           {activeConcept === "channels" && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-              <div style={flowStepBox("#02569b")}>
+            <div className="arch-flow-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+              <div className="arch-flow-box" style={flowStepBox("#02569b")}>
                 <div style={flowStepTitle}>Dart UI Layer</div>
                 <div style={flowStepDesc}>MethodChannel.invokeMethod</div>
               </div>
-              <ArrowRight size={20} color="#f59e0b" />
-              <div style={flowStepBox("#d97706")}>
+              <ArrowRight size={20} color="#f59e0b" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#d97706")}>
                 <div style={flowStepTitle}>Binary Messenger</div>
                 <div style={flowStepDesc}>StandardMessageCodec</div>
               </div>
-              <ArrowRight size={20} color="#f59e0b" />
-              <div style={flowStepBox("#b45309")}>
+              <ArrowRight size={20} color="#f59e0b" className="arch-flow-arrow" />
+              <div className="arch-flow-box" style={flowStepBox("#b45309")}>
                 <div style={flowStepTitle}>Native Platforms</div>
                 <div style={flowStepDesc}>Swift (iOS) &amp; Kotlin (Android)</div>
               </div>
@@ -238,7 +238,6 @@ const conceptCardStyle = (active: boolean, isLight: boolean): React.CSSPropertie
 });
 
 const flowStepBox = (bgColor: string): React.CSSProperties => ({
-  flex: "1 1 180px",
   padding: "14px",
   borderRadius: "12px",
   background: bgColor,

@@ -136,7 +136,7 @@ ${RESUME_DATA.projects
       >
         {/* Modal Top Bar */}
         <div
-          className="no-print"
+          className="no-print resume-modal-header"
           style={{
             padding: "16px 24px",
             background: isLight ? "#f8fafc" : "rgba(15, 23, 42, 0.8)",
@@ -251,6 +251,7 @@ ${RESUME_DATA.projects
         {/* Printable Resume Document Body */}
         <div
           id="printable-resume"
+          className="resume-modal-body"
           style={{
             padding: "36px 40px",
             overflowY: "auto",
@@ -407,7 +408,7 @@ ${RESUME_DATA.projects
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
                 gap: "14px",
               }}
             >
@@ -570,7 +571,7 @@ ${RESUME_DATA.projects
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
                 gap: "14px",
               }}
             >

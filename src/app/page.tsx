@@ -1,21 +1,47 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
-import { SimulatorSection } from "../components/SimulatorSection";
-import { AppleBentoGrid } from "../components/AppleBentoGrid";
-import { ProjectsSection } from "../components/ProjectsSection";
-import { ArchitectureSection } from "../components/ArchitectureSection";
-import { SkillsSection } from "../components/SkillsSection";
-import { ExperienceSection } from "../components/ExperienceSection";
-import { EngagementSection } from "../components/EngagementSection";
-import { ResumeDownloadSection } from "../components/ResumeDownloadSection";
-import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
-import { ResumeModal } from "../components/ResumeModal";
-import { ContactDrawer } from "../components/ContactDrawer";
 import { sound } from "../utils/audioSynth";
+
+const SimulatorSection = dynamic(
+  () => import("../components/SimulatorSection").then((m) => m.SimulatorSection)
+);
+const ProjectsSection = dynamic(
+  () => import("../components/ProjectsSection").then((m) => m.ProjectsSection)
+);
+const AppleBentoGrid = dynamic(
+  () => import("../components/AppleBentoGrid").then((m) => m.AppleBentoGrid)
+);
+const ArchitectureSection = dynamic(
+  () => import("../components/ArchitectureSection").then((m) => m.ArchitectureSection)
+);
+const SkillsSection = dynamic(
+  () => import("../components/SkillsSection").then((m) => m.SkillsSection)
+);
+const EngagementSection = dynamic(
+  () => import("../components/EngagementSection").then((m) => m.EngagementSection)
+);
+const ExperienceSection = dynamic(
+  () => import("../components/ExperienceSection").then((m) => m.ExperienceSection)
+);
+const ResumeDownloadSection = dynamic(
+  () => import("../components/ResumeDownloadSection").then((m) => m.ResumeDownloadSection)
+);
+const ContactSection = dynamic(
+  () => import("../components/ContactSection").then((m) => m.ContactSection)
+);
+const ResumeModal = dynamic(
+  () => import("../components/ResumeModal").then((m) => m.ResumeModal),
+  { ssr: false }
+);
+const ContactDrawer = dynamic(
+  () => import("../components/ContactDrawer").then((m) => m.ContactDrawer),
+  { ssr: false }
+);
 
 export default function Home() {
   const [hotReloadCount, setHotReloadCount] = useState(0);

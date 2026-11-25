@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { sound } from "../utils/audioSynth";
 import { useTheme } from "../context/ThemeContext";
 import {
@@ -96,13 +97,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <header
+        className="site-header"
         style={{
           position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           zIndex: 1000,
-          padding: "20px 32px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -120,6 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Left: Midu-Style Logo */}
         <a
           href="#hero"
+          className="navbar-logo-wrap"
           onClick={() => sound.play("tap")}
           style={{
             display: "flex",
@@ -127,6 +129,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             gap: "12px",
             textDecoration: "none",
             color: isLight ? "#0f172a" : "#ffffff",
+            flexShrink: 0,
           }}
         >
           {/* Clean logo emblem with no glow */}
@@ -146,9 +149,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               flexShrink: 0,
             }}
           >
-            <img
+            <Image
               src="/logo.png"
               alt="Prerit Saini Logo"
+              width={31}
+              height={31}
+              priority
               style={{
                 width: "82%",
                 height: "82%",
@@ -158,6 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             />
           </div>
           <span
+            className="navbar-logo-text"
             style={{
               fontSize: "1.35rem",
               fontWeight: 800,
@@ -170,10 +177,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         </a>
 
         {/* Center: Midu Floating Menu Pill */}
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative", flexShrink: 0 }}>
           <button
             ref={menuButtonRef}
             onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation menu"
+            className="navbar-menu-btn"
             style={{
               display: "flex",
               alignItems: "center",
@@ -217,10 +227,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               </span>
             </div>
 
-            <span style={{ width: "1px", height: "14px", background: isLight ? "rgba(0, 0, 0, 0.12)" : "rgba(255, 255, 255, 0.15)" }} />
+            <span
+              className="navbar-status-divider"
+              style={{ width: "1px", height: "14px", background: isLight ? "rgba(0, 0, 0, 0.12)" : "rgba(255, 255, 255, 0.15)" }}
+            />
 
             {/* Status indicator */}
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <div className="navbar-status-text" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
               <span style={{ fontSize: "0.82rem", color: isLight ? "#64748b" : "#94a3b8", fontWeight: 500 }}>
                 Available for hire
               </span>
@@ -229,7 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Right: Theme & Sound Controls + White "Get in touch" Pill */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
           {/* Grouped Theme & Audio Glass Pill */}
           <div
             style={{
@@ -298,6 +311,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* White Midu Pill Button: Open Contact Drawer */}
           <button
+            className="navbar-cta-btn"
+            aria-label="Get in touch"
             onClick={() => {
               sound.play("tap");
               if (onOpenContact) {
@@ -309,6 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
               background: isLight ? "#0f172a" : "#ffffff",
               color: isLight ? "#ffffff" : "#050505",
@@ -328,8 +344,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               e.currentTarget.style.transform = "scale(1)";
             }}
           >
-            <Mail size={15} style={{ strokeWidth: 2.2 }} />
-            <span>Get in touch</span>
+            <Mail size={15} style={{ strokeWidth: 2.2, flexShrink: 0 }} />
+            <span className="navbar-cta-text">Get in touch</span>
           </button>
         </div>
       </header>
